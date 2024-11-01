@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email             String             @db.VarChar(64)
+  password          String?            @db.VarChar(64)
+  chats             Chat[]
+  reservations      Reservation[]
+  aliments          Aliment[]
+  dailyConsumptions DailyConsumption[]
+  profile           UserProfile?       // Relation vers UserProfile sans détails de relation
+
+}
+
+model UserProfile {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  age            Int
+  weight         Float
+  height         Float
+  objectif String
+  sportFrequency String // Fréquence sportive sous forme de texte
+  userId         String   @unique @db.Uuid
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Chat {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt DateTime @db.Timestamp(6)
+  messages  Json     @db.Json
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Chat_userId_User_id_fk")
+}
+
+model Reservation {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt           DateTime @db.Timestamp(6)
+  details             Json     @db.Json
+  hasCompletedPayment Boolean  @default(false)
+  userId              String   @db.Uuid
+  user                User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Reservation_userId_User_id_fk")
+}
+
+model Aliment {
+  id                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  aliment           String
+  calories          Float
+  glucides          Float
+  lipides           Float
+  proteines         Float
+  userId            String             @db.Uuid
+  user              User               @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  dailyConsumptions DailyConsumption[] @relation("AlimentToDailyConsumption")
+  createdAt         DateTime           @default(now())
+}
+
+model DailyConsumption {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  date       DateTime  @db.Date
+  quantity   Int       @default(1)
+  userId     String    @db.Uuid
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  alimentId  String?   @db.Uuid
+  aliment    Aliment?  @relation("AlimentToDailyConsumption", fields: [alimentId], references: [id], onDelete: Cascade)
+  
+  calories   Float     
+  glucides   Float
+  lipides    Float
+  proteines  Float
+
+  @@unique([userId, date]) // Clé composite pour garantir l'unicité de userId et date
+}
