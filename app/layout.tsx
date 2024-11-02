@@ -2,6 +2,7 @@ import { Metadata } from "next";
 
 import { ThemeProvider } from "@/components/custom/theme-provider";
 
+import { auth } from "./(auth)/auth";
 import Header from "./features/header";
 import "./globals.css";
 
@@ -16,6 +17,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
     <html lang="fr">
       <body>
@@ -25,7 +27,7 @@ export default async function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <Header />
+          <Header session={session} />
           {children}
         </ThemeProvider>
       </body>

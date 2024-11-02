@@ -14,6 +14,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Slider } from "@/components/ui/slider";
 import { Smile } from "lucide-react";
 import { Session } from "next-auth";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function FirstConnection({
@@ -28,7 +29,7 @@ export default function FirstConnection({
   const [frequency, setFrequency] = useState("");
   const [goal, setGoal] = useState("");
   const [error, setError] = useState("");
-
+  const router = useRouter();
   const handleNext = () => {
     setError("");
     if (step === 1) {
@@ -70,6 +71,7 @@ export default function FirstConnection({
       if (response.ok) {
         console.log("Profil créé avec succès :", result.data);
         setStep(4); // Passe à l'étape de confirmation
+        router.push("/");
       } else {
         console.error("Erreur lors de la création du profil :", result.message);
         setError(

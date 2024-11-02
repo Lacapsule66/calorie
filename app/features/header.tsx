@@ -20,10 +20,12 @@ import {
   Settings,
   User,
 } from "lucide-react";
+import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function Header() {
+export default function Header({ session }: { session: Session | null }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -47,13 +49,6 @@ export default function Header() {
                   <PieChart className="size-6 mr-2" />
                   <span className="font-bold">FitTrack</span>
                 </Link>
-                {/* <Link
-                  className="text-foreground/60 hover:text-foreground"
-                  href="/dashboard"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Tableau de bord
-                </Link> */}
                 <Link
                   className="text-foreground/60 hover:text-foreground"
                   href="/"
@@ -78,12 +73,6 @@ export default function Header() {
             <span className="font-bold hidden md:inline-block">FitTrack</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-            {/* <Link
-              className="text-foreground/60 hover:text-foreground"
-              href="/dashboard"
-            >
-              Tableau de bord
-            </Link> */}
             <Link className="text-foreground/60 hover:text-foreground" href="/">
               <MessageCircle className="size-4 mr-1 inline-block" />
               Chat
@@ -114,9 +103,11 @@ export default function Header() {
             <DropdownMenuContent className="w-56" align="end" forceMount>
               <DropdownMenuLabel className="font-normal">
                 <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">username</p>
+                  <p className="text-sm font-medium leading-none">
+                    {session?.user?.name}
+                  </p>
                   <p className="text-xs leading-none text-muted-foreground">
-                    user@example.com
+                    {session?.user?.email}
                   </p>
                 </div>
               </DropdownMenuLabel>
@@ -138,7 +129,7 @@ export default function Header() {
                 <span>Paramètres</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => signOut()}>
                 <LogOut className="mr-2 size-4" />
                 <span>Déconnexion</span>
               </DropdownMenuItem>
