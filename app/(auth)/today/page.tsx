@@ -40,10 +40,10 @@ export default async function page() {
     // Ajoutez autant de données que nécessaire
   ];
   return (
-    <>
+    <div className="">
       <CalorieChart userAliments={userAliments} />
       <CourbePoids />
       <AlimentsTable aliments={userAliments} />
-    </>
+    </div>
   );
 }
