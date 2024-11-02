@@ -42,8 +42,8 @@ export default async function page() {
   return (
     <div className=" sm:flex flex-col items-center">
       <CalorieChart userAliments={userAliments} />
-      <CourbePoids />
       <AlimentsTable aliments={userAliments} />
+      <CourbePoids />
     </div>
   );
 }

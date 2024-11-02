@@ -68,7 +68,7 @@ export const Message = ({
                       <div>{JSON.stringify(result, null, 2)}xxxxxxxxx </div>
                     ) : toolName === "listAliments" ? (
                       <>
-                        <div>{JSON.stringify(result, null, 10)}</div>
+                        <AlimentsTable aliments={result} />
                       </>
                     ) : toolName === "  clozseDsssiscussion" ? (
                       <>
@@ -79,7 +79,7 @@ export const Message = ({
                     ) : toolName === "closeDialog" ? (
                       <Link
                         href="/today"
-                        className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+                        className="inline-flex items-center justify-center px-6 py-3 text-base font-medium text-primary-foreground bg-primary border border-transparent rounded-lg shadow-sm hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-ring transition-colors duration-200"
                       >
                         <span>Allez à la page suivi journalier</span>
                         <svg
