@@ -95,7 +95,7 @@ export default function FirstConnection({
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-[calc(100vh-4rem)] bg-background">
       {step === 1 && (
         <Card className="w-[350px]">
           <CardHeader>
