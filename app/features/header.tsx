@@ -90,8 +90,7 @@ export default function Header() {
             </Link>
             <Link
               className="text-foreground/60 hover:text-foreground"
-              href="/today
-              y"
+              href="/today"
             >
               <PieChart className="size-4 mr-1 inline-block" />
               Suivi Calories
