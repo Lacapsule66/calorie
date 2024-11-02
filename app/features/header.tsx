@@ -47,13 +47,13 @@ export default function Header() {
                   <PieChart className="size-6 mr-2" />
                   <span className="font-bold">FitTrack</span>
                 </Link>
-                <Link
+                {/* <Link
                   className="text-foreground/60 hover:text-foreground"
                   href="/dashboard"
                   onClick={() => setIsOpen(false)}
                 >
                   Tableau de bord
-                </Link>
+                </Link> */}
                 <Link
                   className="text-foreground/60 hover:text-foreground"
                   href="/"
@@ -78,12 +78,12 @@ export default function Header() {
             <span className="font-bold hidden md:inline-block">FitTrack</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-            <Link
+            {/* <Link
               className="text-foreground/60 hover:text-foreground"
               href="/dashboard"
             >
               Tableau de bord
-            </Link>
+            </Link> */}
             <Link className="text-foreground/60 hover:text-foreground" href="/">
               <MessageCircle className="size-4 mr-1 inline-block" />
               Chat

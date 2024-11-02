@@ -40,7 +40,7 @@ export default async function page() {
     // Ajoutez autant de données que nécessaire
   ];
   return (
-    <div className="">
+    <div className=" sm:flex flex-col items-center">
       <CalorieChart userAliments={userAliments} />
       <CourbePoids />
       <AlimentsTable aliments={userAliments} />

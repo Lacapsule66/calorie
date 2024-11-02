@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Toaster } from "sonner";
 
 import { ThemeProvider } from "@/components/custom/theme-provider";
 
@@ -19,15 +18,13 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className="antialiased max-h-screen flex flex-col gap-2 container">
+      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem={false}
           disableTransitionOnChange
         >
-          <Toaster position="top-center" />
-
           <Header />
           {children}
         </ThemeProvider>

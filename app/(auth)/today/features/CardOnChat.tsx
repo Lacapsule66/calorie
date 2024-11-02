@@ -53,8 +53,9 @@ export default function CardOnChat() {
           </Button>
         </div>
         <p className="text-sm text-center text-muted-foreground">
-          Cliquez sur l'icône du micro pour parler ou utilisez le texte pour
-          décrire vos aliments. Je vous guiderai tout au long du processus.
+          Cliquez sur l'icône du micro en bas de l'écran pour parler ou utilisez
+          le texte pour décrire vos aliments. Je vous guiderai tout au long du
+          processus.
         </p>
       </CardContent>
     </Card>
