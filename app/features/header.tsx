@@ -27,7 +27,6 @@ import { useState } from "react";
 
 export default function Header({ session }: { session: Session | null }) {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
@@ -96,7 +95,16 @@ export default function Header({ session }: { session: Session | null }) {
               <Button variant="ghost" className="relative size-8 rounded-full">
                 <Avatar className="size-8">
                   <AvatarImage src="/avatars/01.png" alt="@username" />
-                  <AvatarFallback>U</AvatarFallback>
+                  <AvatarFallback>
+                    <AvatarFallback>
+                      {(session?.user?.name
+                        ? session.user.name.charAt(0)
+                        : session?.user?.email
+                        ? session.user.email.charAt(0)
+                        : ""
+                      ).toUpperCase()}
+                    </AvatarFallback>{" "}
+                  </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
@@ -114,7 +122,11 @@ export default function Header({ session }: { session: Session | null }) {
               <DropdownMenuSeparator />
               <DropdownMenuItem>
                 <User className="mr-2 size-4" />
-                <span>Profil</span>
+                <Link href={"/user/profile"}>Profile</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <User className="mr-2 size-4" />
+                <Link href={"/user/billing"}>Abonnement</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <PieChart className="mr-2 size-4" />

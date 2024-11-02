@@ -41,6 +41,7 @@ export async function POST(request: Request) {
   - Ne fournissez les informations caloriques qu'une fois que l’utilisateur a terminé d'énumérer tous les aliments consommés.
 
 - **Confirmation des aliments consommés** :
+- Utilise le tool listAliments mais n'énumére pas la les aliments .
   - Après avoir retourné la liste des aliments à l’utilisateur,demande s’il a mangé autre chose.
   - Si l’utilisateur répond "oui", demandez-lui de préciser les autres aliments consommés.
   -- Quand tu reçois la réponse des nouveaux aliments consommé reprend l'ancien tableau est met le a jour avec les nouveau aliments
