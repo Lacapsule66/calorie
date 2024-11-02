@@ -55,12 +55,12 @@ export default function CourbePoids() {
     filteredData.reduce((sum, day) => sum + day.poids, 0) / filteredData.length;
 
   return (
-    <Card className="w-full max-w-4xl bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900 dark:to-purple-900">
+    <Card className="w-full max-w-4xl bg-gradient-to-br from-secondary to-accent">
       <CardHeader>
-        <CardTitle className="text-3xl font-bold text-blue-600 dark:text-blue-300">
+        <CardTitle className="text-3xl font-bold text-primary">
           Suivi de Poids (40-120 kg)
         </CardTitle>
-        <CardDescription className="text-lg text-purple-600 dark:text-purple-300">
+        <CardDescription className="text-lg text-primary-foreground">
           Visualisez votre progression sur une large échelle
         </CardDescription>
       </CardHeader>
@@ -77,7 +77,7 @@ export default function CourbePoids() {
             </SelectContent>
           </Select>
           <div className="text-right">
-            <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+            <p className="text-sm font-medium text-muted-foreground">
               Poids moyen: {averageWeight.toFixed(1)} kg
             </p>
             <p
@@ -100,34 +100,45 @@ export default function CourbePoids() {
             >
               <defs>
                 <linearGradient id="colorPoids" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                  <stop
+                    offset="5%"
+                    stopColor="hsl(var(--primary))"
+                    stopOpacity={0.8}
+                  />
+                  <stop
+                    offset="95%"
+                    stopColor="hsl(var(--primary))"
+                    stopOpacity={0}
+                  />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#9CA3AF" />
-              <XAxis dataKey="jour" stroke="#6B7280" />
-              <YAxis domain={[40, 120]} stroke="#6B7280" />
+              <CartesianGrid
+                strokeDasharray="3 3"
+                stroke="hsl(var(--muted-foreground))"
+              />
+              <XAxis dataKey="jour" stroke="hsl(var(--muted-foreground))" />
+              <YAxis domain={[40, 120]} stroke="hsl(var(--muted-foreground))" />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "rgba(255, 255, 255, 0.8)",
-                  borderRadius: "8px",
-                  border: "none",
+                  backgroundColor: "hsl(var(--background))",
+                  borderRadius: "var(--radius)",
+                  border: "1px solid hsl(var(--border))",
                 }}
-                labelStyle={{ color: "#4B5563" }}
+                labelStyle={{ color: "hsl(var(--foreground))" }}
               />
               <Legend />
               <ReferenceLine
                 y={averageWeight}
                 label="Moyenne"
-                stroke="#059669"
+                stroke="hsl(var(--secondary))"
                 strokeDasharray="3 3"
               />
               <Line
                 type="monotone"
                 dataKey="poids"
-                stroke="#8884d8"
+                stroke="hsl(var(--primary))"
                 strokeWidth={3}
-                dot={{ stroke: "#8884d8", strokeWidth: 2, r: 4 }}
+                dot={{ stroke: "hsl(var(--primary))", strokeWidth: 2, r: 4 }}
                 activeDot={{ r: 8 }}
                 name="Poids"
                 fillOpacity={1}
