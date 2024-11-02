@@ -21,12 +21,20 @@ export const {
   providers: [
     Google,
     Credentials({
-      credentials: {},
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
       async authorize({ email, password }: any) {
         let users = await getUser(email);
         if (users.length === 0) return null;
+
         let passwordsMatch = await compare(password, users[0].password!);
-        if (passwordsMatch) return users[0] as any;
+        if (passwordsMatch) {
+          return users[0] as any;
+        } else {
+          return null;
+        }
       },
     }),
   ],
