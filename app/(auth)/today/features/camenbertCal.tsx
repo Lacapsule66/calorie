@@ -95,7 +95,7 @@ export default function CalorieChart({
   }
   return (
     <Card className="w-full max-w-md">
-      <Button onClick={sendMessageToApp}></Button>
+      <Button onClick={sendMessageToApp}>je suis le btn</Button>
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center">
           Suivi des Calories
