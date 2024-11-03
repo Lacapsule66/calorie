@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -89,9 +90,12 @@ export default function CalorieChart({
   if (!mounted) {
     return null; // ou un composant de chargement
   }
-
+  function sendMessageToApp(window: any) {
+    window.ReactNativeWebView.postMessage("Hello from the WebView!");
+  }
   return (
     <Card className="w-full max-w-md">
+      <Button onClick={sendMessageToApp}></Button>
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-center">
           Suivi des Calories
