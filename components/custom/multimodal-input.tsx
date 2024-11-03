@@ -122,7 +122,7 @@ export function MultimodalInput({
             stop();
           }}
         >
-          <StopCircle size={14} />
+          <StopCircle size={22} />
         </Button>
       ) : (
         <>
@@ -134,7 +134,7 @@ export function MultimodalInput({
             }}
             disabled={input.length === 0}
           >
-            <ArrowUp size={14} />
+            <ArrowUp size={22} />
           </Button>
 
           {/* Bouton pour la reconnaissance vocale */}
@@ -147,9 +147,9 @@ export function MultimodalInput({
             disabled={isLoading}
           >
             {isRecording ? (
-              <MicOff size={14} className="animate-pulse" />
+              <MicOff size={22} className="animate-pulse" />
             ) : (
-              <Mic size={14} />
+              <Mic size={22} />
             )}
           </Button>
         </>

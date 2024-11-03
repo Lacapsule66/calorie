@@ -20,15 +20,15 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <html lang="fr">
-      <body>
+      <body className=" h-screen relative">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
           enableSystem={false}
           disableTransitionOnChange
         >
-          <Header session={session} />
           {children}
+          <Header session={session} />
         </ThemeProvider>
       </body>
     </html>

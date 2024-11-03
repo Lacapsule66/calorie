@@ -37,11 +37,11 @@ export function Chat({
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
 
   return (
-    <div className="flex flex-row justify-center pb-4 md:pb-8 h-[calc(100vh-7rem)] bg-background">
-      <div className="flex flex-col justify-between items-center gap-4">
+    <div className="flex flex-row justify-center pb-4 md:pb-8 max-h-screen bg-background">
+      <div className="flex flex-col h-[calc(100vh-7rem)]  justify-between items-center gap-4">
         <div
           ref={messagesContainerRef}
-          className="flex flex-col gap-4 h-full w-dvw items-center overflow-y-scroll"
+          className="flex flex-col gap-4 h-full pt-4 w-dvw items-center overflow-y-scroll"
         >
           {messages.length === 0 && <CardOnChat />}
 

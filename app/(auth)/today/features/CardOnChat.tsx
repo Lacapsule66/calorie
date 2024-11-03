@@ -23,7 +23,7 @@ export default function CardOnChat() {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full  max-w-md mx-auto">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold text-primary">
           Assistant Compteur de Calories

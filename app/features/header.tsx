@@ -28,7 +28,7 @@ import { useState } from "react";
 export default function Header({ session }: { session: Session | null }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="fixed  bottom-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -53,16 +53,16 @@ export default function Header({ session }: { session: Session | null }) {
                   href="/"
                   onClick={() => setIsOpen(false)}
                 >
-                  <MessageCircle className="size-4 mr-2 inline-block" />
-                  Chat
+                  <MessageCircle className="size-8 mr-2 inline-block" />
+                  Parler a votre Assistant
                 </Link>
                 <Link
                   className="text-foreground/60 hover:text-foreground"
                   href="/today"
                   onClick={() => setIsOpen(false)}
                 >
-                  <PieChart className="size-4 mr-2 inline-block" />
-                  Suivi Calories
+                  <PieChart className="size-8 mr-2 inline-block" />
+                  Suivi Nutritionnel
                 </Link>
               </nav>
             </SheetContent>
@@ -80,7 +80,7 @@ export default function Header({ session }: { session: Session | null }) {
               className="text-foreground/60 hover:text-foreground"
               href="/today"
             >
-              <PieChart className="size-4 mr-1 inline-block" />
+              <PieChart className="size-8 mr-1 inline-block" />
               Suivi Calories
             </Link>
           </nav>
