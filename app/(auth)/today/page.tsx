@@ -5,12 +5,12 @@ import prisma from "@/lib/prisma";
 import CourbePoids from "@/app/features/courbe-poids";
 import { auth } from "../auth";
 import CalorieChart from "./features/camenbertCal";
+import { CompteurMacro } from "./features/CompteurMacro";
 
 // Fonction pour récupérer les aliments d'un utilisateur spécifique
 async function getAlimentsByUserId(userId: string) {
   const startOfDay = new Date();
   startOfDay.setHours(0, 0, 0, 0);
-
   // Fin de la journée à 23h59:59.999
   const endOfDay = new Date();
   endOfDay.setHours(23, 59, 59, 999);
@@ -40,8 +40,9 @@ export default async function page() {
     // Ajoutez autant de données que nécessaire
   ];
   return (
-    <div className=" sm:flex flex-col items-center">
+    <div className=" sm:flex flex-col gap-4 mt-4 items-center">
       <CalorieChart userAliments={userAliments} />
+      <CompteurMacro userAliments={userAliments} />
       <AlimentsTable aliments={userAliments} />
       <CourbePoids />
     </div>
