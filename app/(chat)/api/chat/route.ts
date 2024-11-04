@@ -95,7 +95,7 @@ export async function POST(request: Request) {
           alimentsList: z.array(
             z.object({
               aliment: z.string(),
-              calorie: z.number(),
+              calories: z.number(),
               glucides: z.number(),
               lipides: z.number(),
               proteines: z.number(),
@@ -118,7 +118,7 @@ export async function POST(request: Request) {
               const aliment = await prisma.aliment.create({
                 data: {
                   aliment: item.aliment,
-                  calories: item.calorie,
+                  calories: item.calories,
                   glucides: item.glucides,
                   lipides: item.lipides,
                   proteines: item.proteines,

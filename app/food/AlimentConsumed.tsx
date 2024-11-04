@@ -2,13 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
   Table,
   TableBody,
   TableCell,
@@ -39,7 +32,60 @@ const truncateText = (text: string, maxLength: number) => {
 };
 
 export default function AlimentsTable({ aliments }: AlimentsTableProps) {
-  const [selectedAliment, setSelectedAliment] = useState<Aliment | null>(null);
+  const [alimentsState, setAlimentsState] = useState(aliments);
+  const [selectedAlimentId, setSelectedAlimentId] = useState<string | null>(
+    null
+  );
+  const [newQuantite, setNewQuantite] = useState<number | null>(null);
+
+  const handleQuantiteClick = (
+    alimentId: string,
+    currentQuantite: number | null
+  ) => {
+    setSelectedAlimentId(alimentId);
+    setNewQuantite(currentQuantite || 0);
+  };
+
+  const updateQuantite = async (alimentId: string) => {
+    if (newQuantite === null) return;
+
+    try {
+      const response = await fetch(`/api/aliments/${alimentId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ quantite: newQuantite }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de la mise à jour de la quantité");
+      }
+
+      const updatedAliment = await response.json();
+
+      // Mettre à jour l'état local des aliments avec les nouvelles valeurs
+      setAlimentsState((prevAliments) =>
+        prevAliments.map((aliment) =>
+          aliment.id === alimentId
+            ? {
+                ...aliment,
+                quantite: updatedAliment.quantite,
+                calories: updatedAliment.calories,
+                proteines: updatedAliment.proteines,
+                glucides: updatedAliment.glucides,
+                lipides: updatedAliment.lipides,
+              }
+            : aliment
+        )
+      );
+
+      setSelectedAlimentId(null); // Réinitialise la sélection après la mise à jour
+      setNewQuantite(null); // Réinitialise la nouvelle quantité
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -62,52 +108,44 @@ export default function AlimentsTable({ aliments }: AlimentsTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {aliments.map((aliment) => (
+          {alimentsState.map((aliment) => (
             <TableRow key={aliment.id}>
-              <TableCell>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="link"
-                      className="p-0"
-                      onClick={() => setSelectedAliment(aliment)}
-                    >
-                      {truncateText(aliment.aliment, 20)}
+              <TableCell>{truncateText(aliment.aliment, 20)}</TableCell>
+              <TableCell className="text-right">
+                {selectedAlimentId === aliment.id ? (
+                  <div className="flex items-center justify-end gap-2">
+                    <input
+                      type="number"
+                      value={newQuantite || 0}
+                      onChange={(e) => setNewQuantite(Number(e.target.value))}
+                      className="border p-1 w-16 text-right"
+                    />
+                    <Button onClick={() => updateQuantite(aliment.id)}>
+                      Mettre à jour
                     </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>{aliment.aliment}</DialogTitle>
-                    </DialogHeader>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>Calories:</div>
-                      <div>{aliment.calories}</div>
-                      <div>Protéines:</div>
-                      <div>{aliment.proteines}g</div>
-                      <div>Glucides:</div>
-                      <div>{aliment.glucides}g</div>
-                      <div>Lipides:</div>
-                      <div>{aliment.lipides}g</div>
-                      <div>Quantité:</div>
-                      <div>{aliment.quantite}</div>
-                      <div>Date d'ajout:</div>
-                      <div>
-                        {new Date(aliment.createdAt).toLocaleDateString()}
-                      </div>
-                    </div>
-                  </DialogContent>
-                </Dialog>
+                  </div>
+                ) : (
+                  <span
+                    className="cursor-pointer"
+                    onClick={() =>
+                      handleQuantiteClick(aliment.id, aliment.quantite)
+                    }
+                  >
+                    {aliment.quantite}
+                  </span>
+                )}
               </TableCell>
-              <TableCell className="text-right">{aliment.quantite}</TableCell>
-              <TableCell className="text-right">{aliment.calories}</TableCell>
-              <TableCell className="hidden md:table-cell text-right">
-                {aliment.proteines}g
+              <TableCell className="text-right">
+                {(aliment.calories || 0).toFixed(2)}
               </TableCell>
               <TableCell className="hidden md:table-cell text-right">
-                {aliment.glucides}g
+                {(aliment.proteines || 0).toFixed(2)}g
               </TableCell>
               <TableCell className="hidden md:table-cell text-right">
-                {aliment.lipides}g
+                {(aliment.glucides || 0).toFixed(2)}g
+              </TableCell>
+              <TableCell className="hidden md:table-cell text-right">
+                {(aliment.lipides || 0).toFixed(2)}g
               </TableCell>
             </TableRow>
           ))}
