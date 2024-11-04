@@ -42,6 +42,7 @@ export default function CourbePoids({ userProfileId }: CourbePoidsProps) {
       const response = await fetch(`/api/user/${userProfileId}`);
       const result: WeightTrackingData[] = await response.json();
       setData(result);
+      console.log(result);
     };
 
     fetchData();
@@ -82,7 +83,6 @@ export default function CourbePoids({ userProfileId }: CourbePoidsProps) {
   const averageWeight =
     filteredData.reduce((sum, day) => sum + day.poids, 0) /
       filteredData.length || 0;
-
   return (
     <Card className="w-full max-w-4xl bg-gradient-to-br from-secondary to-accent">
       <CardHeader>

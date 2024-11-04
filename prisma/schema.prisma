@@ -11,37 +11,45 @@ model User {
   id                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email             String             @db.VarChar(64)
   password          String?            @db.VarChar(64)
-  name String?
+  name              String?
+  profile           UserProfile?       // Relation optionnelle vers UserProfile
+
+  // Relations vers WeightTracking directement
+  weightTracking    WeightTracking[]   @relation("UserToWeightTracking")
+
+  // Autres relations et champs
   chats             Chat[]
   reservations      Reservation[]
   aliments          Aliment[]
   dailyConsumptions DailyConsumption[]
-  profile           UserProfile?       // Relation vers UserProfile sans détails de relation
-
-}
-
-model WeightTracking {
-  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  date       DateTime  @db.Date
-  weight     Float
-  userProfileId String @db.Uuid
-  userProfile UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
-
-  @@unique([userProfileId, date]) // Unicité pour empêcher plus d'une entrée par jour
 }
 
 model UserProfile {
-  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id             String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   age            Int
   weight         Float
   height         Float
   objectif       String
   sportFrequency String
-  userId         String          @unique @db.Uuid
-  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  weightTracking WeightTracking[] // Relation vers WeightTracking
+  userId         String            @unique @db.Uuid
+  user           User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Relation vers WeightTracking
+  weightTracking WeightTracking[]  @relation("UserProfileToWeightTracking")
 }
 
+model WeightTracking {
+  id             String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  date           DateTime      @db.Date
+  weight         Float
+  userId         String?       @db.Uuid   // Relation optionnelle vers User
+  user           User?         @relation("UserToWeightTracking", fields: [userId], references: [id], onDelete: Cascade)
+  
+  userProfileId  String?       @db.Uuid   // Relation optionnelle vers UserProfile
+  userProfile    UserProfile?  @relation("UserProfileToWeightTracking", fields: [userProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([userProfileId, date, userId]) // Unicité pour empêcher plus d'une entrée par jour pour un profil utilisateur
+}
 model Chat {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   createdAt DateTime @db.Timestamp(6)
