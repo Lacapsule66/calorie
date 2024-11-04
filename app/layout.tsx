@@ -28,8 +28,8 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           {children}
-          <Header session={session} />
         </ThemeProvider>
+        <Header session={session} />
       </body>
     </html>
   );

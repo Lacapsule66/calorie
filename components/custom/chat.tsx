@@ -37,11 +37,11 @@ export function Chat({
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
 
   return (
-    <div className="flex flex-row justify-center pb-4 md:pb-8 max-h-screen bg-background">
+    <div className="flex flex-row justify-center pb-4 h  sm:mt-24 md:pb-8 max-h-screen bg-background">
       <div className="flex flex-col h-[calc(100vh-7rem)]  justify-between items-center gap-4">
         <div
           ref={messagesContainerRef}
-          className="flex flex-col gap-4 h-full pt-4 w-dvw items-center overflow-y-scroll"
+          className="flex flex-col gap-4 h-full pt-4 w-[98dvw] items-center overflow-y-scroll"
         >
           {messages.length === 0 && <CardOnChat />}
 
@@ -62,7 +62,7 @@ export function Chat({
           />
         </div>
 
-        <form className="flex flex-row gap-2 relative items-end w-full md:max-w-[500px] max-w-[calc(100dvw-32px) px-4 md:px-0">
+        <form className="flex flex-row gap-2 mb-4 relative items-end w-full md:max-w-[500px] max-w-[calc(100dvw-32px) px-4 md:px-0">
           <MultimodalInput
             input={input}
             setInput={setInput}

@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
-  Bell,
   LogOut,
   Menu,
   MessageCircle,
@@ -28,13 +27,13 @@ import { useState } from "react";
 export default function Header({ session }: { session: Session | null }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <header className="fixed  bottom-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="fixed h-fit  bottom-0 sm:top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center justify-between">
         <div className="flex items-center">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden">
-                <Menu className="size-5" />
+                <Menu className="size-6" />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
@@ -45,7 +44,7 @@ export default function Header({ session }: { session: Session | null }) {
                   href="/"
                   onClick={() => setIsOpen(false)}
                 >
-                  <PieChart className="size-6 mr-2" />
+                  <PieChart className="size-8 mr-2" />
                   <span className="font-bold">FitTrack</span>
                 </Link>
                 <Link
@@ -68,13 +67,13 @@ export default function Header({ session }: { session: Session | null }) {
             </SheetContent>
           </Sheet>
           <Link className="flex items-center space-x-2 md:mr-6" href="/">
-            <PieChart className="size-6" />
+            <PieChart className="size-8" />
             <span className="font-bold hidden md:inline-block">FitTrack</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
             <Link className="text-foreground/60 hover:text-foreground" href="/">
-              <MessageCircle className="size-4 mr-1 inline-block" />
-              Chat
+              <MessageCircle className="size-8 mr-1 inline-block" />
+              Parler a votre Assistant
             </Link>
             <Link
               className="text-foreground/60 hover:text-foreground"
@@ -86,10 +85,10 @@ export default function Header({ session }: { session: Session | null }) {
           </nav>
         </div>
         <div className="flex items-center space-x-2">
-          <Button size="icon" variant="ghost">
+          {/* <Button size="icon" variant="ghost">
             <Bell className="size-5" />
             <span className="sr-only">Notifications</span>
-          </Button>
+          </Button> */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative size-8 rounded-full">
@@ -114,35 +113,35 @@ export default function Header({ session }: { session: Session | null }) {
                   <p className="text-sm font-medium leading-none">
                     {session?.user?.name}
                   </p>
-                  <p className="text-xs leading-none text-muted-foreground">
+                  <p className="text-l leading-none text-muted-foreground">
                     {session?.user?.email}
                   </p>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <User className="mr-2 size-4" />
+                <User className="mr-2 size-8" />
                 <Link href={"/user/profile"}>Profile</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <User className="mr-2 size-4" />
+                <User className="mr-2 size-8" />
                 <Link href={"/user/billing"}>Abonnement</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <PieChart className="mr-2 size-4" />
+                <PieChart className="mr-2 size-8" />
                 <span>Objectifs caloriques</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <MessageCircle className="mr-2 size-4" />
+                <MessageCircle className="mr-2 size-8" />
                 <span>Messages</span>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Settings className="mr-2 size-4" />
+                <Settings className="mr-2 size-8" />
                 <span>Paramètres</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => signOut()}>
-                <LogOut className="mr-2 size-4" />
+                <LogOut className="mr-2 size-8" />
                 <span>Déconnexion</span>
               </DropdownMenuItem>
             </DropdownMenuContent>

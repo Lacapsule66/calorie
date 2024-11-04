@@ -20,15 +20,26 @@ model User {
 
 }
 
+model WeightTracking {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  date       DateTime  @db.Date
+  weight     Float
+  userProfileId String @db.Uuid
+  userProfile UserProfile @relation(fields: [userProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([userProfileId, date]) // Unicité pour empêcher plus d'une entrée par jour
+}
+
 model UserProfile {
-  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id             String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   age            Int
   weight         Float
   height         Float
-  objectif String
-  sportFrequency String // Fréquence sportive sous forme de texte
-  userId         String   @unique @db.Uuid
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  objectif       String
+  sportFrequency String
+  userId         String          @unique @db.Uuid
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  weightTracking WeightTracking[] // Relation vers WeightTracking
 }
 
 model Chat {
