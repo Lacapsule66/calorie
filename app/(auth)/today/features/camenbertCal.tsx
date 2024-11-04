@@ -21,6 +21,7 @@ type UserAliment = {
   proteines: number;
   userId: string;
   createdAt: Date;
+  quantite: number | null;
 };
 
 const SAMPLE: UserAliment[] = [
@@ -33,6 +34,7 @@ const SAMPLE: UserAliment[] = [
     proteines: 0.5,
     userId: "user1",
     createdAt: new Date(),
+    quantite: 1,
   },
   {
     aliment: "Poulet grillé",
@@ -43,6 +45,7 @@ const SAMPLE: UserAliment[] = [
     proteines: 31,
     userId: "user1",
     createdAt: new Date(),
+    quantite: 1,
   },
   {
     aliment: "Riz brun",
@@ -53,6 +56,7 @@ const SAMPLE: UserAliment[] = [
     proteines: 5,
     userId: "user1",
     createdAt: new Date(),
+    quantite: 1,
   },
 ];
 
@@ -72,7 +76,7 @@ export default function CalorieChart({
   }, []);
 
   const caloriesConsumed = userAliments.reduce(
-    (sum, aliment) => sum + aliment.calories,
+    (sum, aliment) => sum + aliment.calories * (aliment.quantite || 1),
     0
   );
   const remainingCalories = Math.max(totalDailyCalories - caloriesConsumed, 0);

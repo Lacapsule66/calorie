@@ -19,6 +19,7 @@ interface Aliment {
   lipides: number;
   proteines: number;
   userId: string;
+  quantite: number | null;
   createdAt: Date;
 }
 
@@ -29,10 +30,16 @@ interface CompteurMacroProps {
 // Composant CompteurMacro
 export function CompteurMacro({ userAliments }: CompteurMacroProps) {
   const { lipides, glucides, proteines, total } = useMemo(() => {
-    const lipides = userAliments.reduce((acc, item) => acc + item.lipides, 0);
-    const glucides = userAliments.reduce((acc, item) => acc + item.glucides, 0);
+    const lipides = userAliments.reduce(
+      (acc, item) => acc + item.lipides * (item.quantite || 1),
+      0
+    );
+    const glucides = userAliments.reduce(
+      (acc, item) => acc + item.glucides * (item.quantite || 1),
+      0
+    );
     const proteines = userAliments.reduce(
-      (acc, item) => acc + item.proteines,
+      (acc, item) => acc + item.proteines * (item.quantite || 1),
       0
     );
     const total = lipides + glucides + proteines;
@@ -40,9 +47,9 @@ export function CompteurMacro({ userAliments }: CompteurMacroProps) {
   }, [userAliments]);
 
   const data = [
-    { name: "Lipides", value: lipides, color: "hsl(var(--primary))" }, // Couleur pour Lipides
-    { name: "Glucides", value: glucides, color: "hsl(220, 90%, 60%)" }, // Couleur plus marquée pour Glucides
-    { name: "Protéines", value: proteines, color: "hsl(40, 85%, 50%)" }, // Couleur plus marquée pour Protéines
+    { name: "Lipides", value: lipides, color: "hsl(var(--primary))" },
+    { name: "Glucides", value: glucides, color: "hsl(220, 90%, 60%)" },
+    { name: "Protéines", value: proteines, color: "hsl(40, 85%, 50%)" },
   ];
 
   const getPercentage = (value: number) =>

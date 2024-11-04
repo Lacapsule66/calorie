@@ -99,6 +99,7 @@ export async function POST(request: Request) {
               glucides: z.number(),
               lipides: z.number(),
               proteines: z.number(),
+              quantite: z.number(),
             })
           ),
         }),
@@ -121,6 +122,7 @@ export async function POST(request: Request) {
                   glucides: item.glucides,
                   lipides: item.lipides,
                   proteines: item.proteines,
+                  quantite: item.quantite,
                   userId: session.user?.id || "",
                   createdAt: currentDateTime,
                 },

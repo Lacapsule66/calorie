@@ -1,5 +1,6 @@
 "use client";
 
+import { ThemeToggle } from "@/components/custom/theme-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -89,6 +90,7 @@ export default function Header({ session }: { session: Session | null }) {
             <Bell className="size-5" />
             <span className="sr-only">Notifications</span>
           </Button> */}
+          <ThemeToggle />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative size-8 rounded-full">

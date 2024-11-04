@@ -24,12 +24,12 @@ export default async function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          enableSystem={false}
+          enableSystem
           disableTransitionOnChange
         >
           {children}
+          <Header session={session} />
         </ThemeProvider>
-        <Header session={session} />
       </body>
     </html>
   );

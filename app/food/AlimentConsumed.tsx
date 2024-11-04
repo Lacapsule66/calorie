@@ -26,6 +26,7 @@ interface Aliment {
   lipides: number;
   proteines: number;
   userId: string;
+  quantite: number | null;
   createdAt: Date;
 }
 
@@ -47,6 +48,7 @@ export default function AlimentsTable({ aliments }: AlimentsTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead>Aliment</TableHead>
+            <TableHead className="text-right">Quantité</TableHead>
             <TableHead className="text-right">Calories</TableHead>
             <TableHead className="hidden md:table-cell text-right">
               Protéines
@@ -86,6 +88,8 @@ export default function AlimentsTable({ aliments }: AlimentsTableProps) {
                       <div>{aliment.glucides}g</div>
                       <div>Lipides:</div>
                       <div>{aliment.lipides}g</div>
+                      <div>Quantité:</div>
+                      <div>{aliment.quantite}</div>
                       <div>Date d'ajout:</div>
                       <div>
                         {new Date(aliment.createdAt).toLocaleDateString()}
@@ -94,6 +98,7 @@ export default function AlimentsTable({ aliments }: AlimentsTableProps) {
                   </DialogContent>
                 </Dialog>
               </TableCell>
+              <TableCell className="text-right">{aliment.quantite}</TableCell>
               <TableCell className="text-right">{aliment.calories}</TableCell>
               <TableCell className="hidden md:table-cell text-right">
                 {aliment.proteines}g

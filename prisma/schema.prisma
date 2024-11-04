@@ -69,6 +69,7 @@ model Reservation {
 
 model Aliment {
   id                String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  quantite Int?
   aliment           String
   calories          Float
   glucides          Float
