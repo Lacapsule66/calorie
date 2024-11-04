@@ -52,10 +52,16 @@ export default function CardOnChat() {
             <span>Écrire un message</span>
           </Button>
         </div>
-        <p className="text-sm text-center text-muted-foreground">
+        <p className=" text-center text-muted-foreground">
           Cliquez sur l'icône du micro en bas de l'écran pour parler ou utilisez
-          le texte pour décrire vos aliments. Je vous guiderai tout au long du
-          processus.
+          le texte pour décrire vos aliments.
+        </p>
+        <p className=" text-center text-muted-foreground">
+          Parler moi normalement tout en me donnant un maximum de detail pour
+          optimisé au mieu le calcul de vos calories
+        </p>
+        <p className=" text-center text-muted-foreground">
+          Je vous guiderai tout au long du processus.{" "}
         </p>
       </CardContent>
     </Card>

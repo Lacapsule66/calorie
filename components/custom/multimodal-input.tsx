@@ -116,7 +116,7 @@ export function MultimodalInput({
 
       {isLoading ? (
         <Button
-          className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5 text-white"
+          className="rounded-full p-1.5 h-fit absolute bottom-2 right-0 m-0.5 text-white"
           onClick={(event) => {
             event.preventDefault();
             stop();
@@ -127,7 +127,7 @@ export function MultimodalInput({
       ) : (
         <>
           <Button
-            className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5 text-white"
+            className="rounded-full p-1.5 h-fit absolute bottom-2 right-0 m-0.5 text-white"
             onClick={(event) => {
               event.preventDefault();
               submitForm();
