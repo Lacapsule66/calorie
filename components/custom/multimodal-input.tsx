@@ -1,13 +1,11 @@
 "use client";
 import { Message } from "ai";
-import { ArrowUp, Mic, MicOff, StopCircle } from "lucide-react"; // Importation des icônes depuis lucide-react
+import { ArrowUp, Mic, MicOff, StopCircle } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import "regenerator-runtime/runtime";
-
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-
+import "regenerator-runtime/runtime";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
@@ -22,6 +20,15 @@ interface MultimodalInputProps {
   handleSubmit: (event?: React.FormEvent) => void;
 }
 
+// Vérification pour s'assurer que ReactNativeWebView existe
+declare global {
+  interface Window {
+    ReactNativeWebView?: {
+      postMessage: (message: string) => void;
+    };
+  }
+}
+
 export function MultimodalInput({
   input,
   setInput,
@@ -33,7 +40,6 @@ export function MultimodalInput({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { width } = useWindowSize();
 
-  // États pour la reconnaissance vocale
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const [isRecording, setIsRecording] = useState<boolean>(false);
 
@@ -61,7 +67,6 @@ export function MultimodalInput({
     setInput(event.target.value);
     adjustHeight();
 
-    // Réinitialiser le transcript lorsque l'input est vidé
     if (event.target.value === "") {
       resetTranscript();
     }
@@ -69,14 +74,10 @@ export function MultimodalInput({
 
   const toggleRecording = () => {
     if (!isRecording) {
-      // Réinitialiser le transcript lorsque l'enregistrement démarre
       resetTranscript();
-
       SpeechRecognition.startListening({ continuous: true, language: "fr-FR" });
     } else {
       SpeechRecognition.stopListening();
-      // Optionnel : réinitialiser le transcript lorsque l'enregistrement s'arrête
-      // resetTranscript();
     }
     setIsRecording(!isRecording);
   };
@@ -86,14 +87,21 @@ export function MultimodalInput({
     if (width && width > 768) {
       textareaRef.current?.focus();
     }
-    // Réinitialiser le transcript après l'envoi du message
     resetTranscript();
+
+    // Envoyer le boolean true à Expo
+    if (window.ReactNativeWebView) {
+      const message = true;
+      window.ReactNativeWebView.postMessage(JSON.stringify(message));
+      console.log("Boolean envoyé :", message); // Log dans la console
+      alert("Boolean envoyé avec succès !"); // Alerte pour confirmation
+    } else {
+      console.warn("ReactNativeWebView non disponible");
+    }
   }, [handleSubmit, width, resetTranscript]);
 
   return (
     <div className="relative w-full flex flex-col gap-4">
-      {/* Votre code existant pour les messages ou autres éléments */}
-
       <Textarea
         ref={textareaRef}
         placeholder="Envoyer un message..."
@@ -104,7 +112,6 @@ export function MultimodalInput({
         onKeyDown={(event) => {
           if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
-
             if (isLoading) {
               toast.error("Veuillez attendre la fin de la réponse du modèle !");
             } else {
@@ -137,7 +144,6 @@ export function MultimodalInput({
             <ArrowUp size={22} />
           </Button>
 
-          {/* Bouton pour la reconnaissance vocale */}
           <Button
             type="button"
             variant={isRecording ? "destructive" : "secondary"}
