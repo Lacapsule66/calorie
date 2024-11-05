@@ -1,11 +1,9 @@
 "use client";
-import { Message } from "ai";
 import { ArrowUp, Mic, MicOff, StopCircle } from "lucide-react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import "regenerator-runtime/runtime";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
@@ -16,11 +14,11 @@ interface MultimodalInputProps {
   setInput: (value: string) => void;
   isLoading: boolean;
   stop: () => void;
-  messages: Array<Message>;
+  messages: Array<any>;
   handleSubmit: (event?: React.FormEvent) => void;
 }
 
-// Vérification pour s'assurer que ReactNativeWebView existe
+// Déclarer ReactNativeWebView pour que TypeScript le reconnaisse
 declare global {
   interface Window {
     ReactNativeWebView?: {
@@ -39,9 +37,8 @@ export function MultimodalInput({
 }: MultimodalInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { width } = useWindowSize();
-
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
-  const [isRecording, setIsRecording] = useState<boolean>(false);
+  const [isRecording, setIsRecording] = useState(false);
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -56,6 +53,7 @@ export function MultimodalInput({
     }
   }, [transcript, isRecording, setInput]);
 
+  // Fonction pour ajuster la hauteur du Textarea
   const adjustHeight = () => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
@@ -63,15 +61,16 @@ export function MultimodalInput({
     }
   };
 
+  // Gestion de l'input utilisateur
   const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(event.target.value);
     adjustHeight();
-
     if (event.target.value === "") {
       resetTranscript();
     }
   };
 
+  // Bascule de l'enregistrement audio
   const toggleRecording = () => {
     if (!isRecording) {
       resetTranscript();
@@ -82,6 +81,7 @@ export function MultimodalInput({
     setIsRecording(!isRecording);
   };
 
+  // Envoi du boolean et soumission du formulaire
   const submitForm = useCallback(() => {
     handleSubmit();
     if (width && width > 768) {
@@ -89,11 +89,11 @@ export function MultimodalInput({
     }
     resetTranscript();
 
-    // Envoyer le boolean true à Expo
-    if (window.ReactNativeWebView) {
+    // Vérifier si la WebView est disponible avant d'envoyer le boolean
+    if (typeof window !== "undefined" && window.ReactNativeWebView) {
       const message = true;
       window.ReactNativeWebView.postMessage(JSON.stringify(message));
-      console.log("Boolean envoyé :", message); // Log dans la console
+      console.log("Boolean envoyé :", message); // Log pour confirmation
       alert("Boolean envoyé avec succès !"); // Alerte pour confirmation
     } else {
       console.warn("ReactNativeWebView non disponible");
