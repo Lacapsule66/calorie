@@ -31,7 +31,6 @@ export function MultimodalInput({
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { width } = useWindowSize();
 
-  // États pour la reconnaissance vocale
   const { transcript, listening, resetTranscript } = useSpeechRecognition();
   const [isRecording, setIsRecording] = useState<boolean>(false);
 
@@ -83,7 +82,10 @@ export function MultimodalInput({
 
     // Envoyer le boolean true à Expo
     if (window.ReactNativeWebView) {
-      window.ReactNativeWebView.postMessage(JSON.stringify(true));
+      const message = true;
+      window.ReactNativeWebView.postMessage(JSON.stringify(message));
+
+      alert("Boolean envoyé avec succès !"); // Alerte pour confirmation
     }
   }, [handleSubmit, width, resetTranscript]);
 
