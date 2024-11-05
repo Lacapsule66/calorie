@@ -1,7 +1,8 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Test = () => {
+  const [message, setMessage] = useState();
   // Fonction pour envoyer un message à l'application Expo
   const sendMessageToApp = () => {
     if (window.ReactNativeWebView) {
@@ -17,6 +18,7 @@ const Test = () => {
     window.addEventListener("message", (event) => {
       if (event.data) {
         console.log("Message reçu depuis Expo :", event.data);
+        setMessage(event.data);
       }
     });
 
@@ -29,7 +31,7 @@ const Test = () => {
 
   return (
     <div>
-      <h1>Next.js WebView</h1>
+      <h1>{message}</h1>
       <button onClick={sendMessageToApp}>Send Message to Expo App</button>
     </div>
   );
