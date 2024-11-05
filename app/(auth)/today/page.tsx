@@ -3,6 +3,7 @@ import { default as AlimentsTable } from "@/app/food/AlimentConsumed";
 import prisma from "@/lib/prisma";
 
 import CourbePoids from "@/app/features/courbe-poids";
+import Test from "@/app/features/Test";
 import { auth } from "../auth";
 import CalorieChart from "./features/camenbertCal";
 import { CompteurMacro } from "./features/CompteurMacro";
@@ -41,6 +42,7 @@ export default async function page() {
   ];
   return (
     <div className=" sm:mt-24 sm:flex flex-col gap-4 mt-4 items-center">
+      <Test />
       <CalorieChart userAliments={userAliments} />
       <CompteurMacro userAliments={userAliments} />
       <AlimentsTable aliments={userAliments} />

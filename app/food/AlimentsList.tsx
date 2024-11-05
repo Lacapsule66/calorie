@@ -2,6 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
   Table,
   TableBody,
   TableCell,
@@ -37,6 +43,8 @@ export default function AlimentsTable({ aliments }: AlimentsTableProps) {
     null
   );
   const [newQuantite, setNewQuantite] = useState<number | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false); // État pour contrôler l'ouverture de la modal
+  const [selectedAliment, setSelectedAliment] = useState<Aliment | null>(null);
 
   const handleQuantiteClick = (
     alimentId: string,
@@ -44,6 +52,16 @@ export default function AlimentsTable({ aliments }: AlimentsTableProps) {
   ) => {
     setSelectedAlimentId(alimentId);
     setNewQuantite(currentQuantite || 0);
+  };
+
+  const handleDialogOpen = (aliment: Aliment) => {
+    setSelectedAliment(aliment);
+    setIsDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setIsDialogOpen(false);
+    setSelectedAliment(null);
   };
 
   const updateQuantite = async (alimentId: string) => {
@@ -110,7 +128,15 @@ export default function AlimentsTable({ aliments }: AlimentsTableProps) {
         <TableBody>
           {alimentsState.map((aliment) => (
             <TableRow key={aliment.id}>
-              <TableCell>{truncateText(aliment.aliment, 20)}</TableCell>
+              <TableCell>
+                <Button
+                  variant="link"
+                  className="p-0"
+                  onClick={() => handleDialogOpen(aliment)}
+                >
+                  {truncateText(aliment.aliment, 20)}
+                </Button>
+              </TableCell>
               <TableCell className="text-right">
                 {selectedAlimentId === aliment.id ? (
                   <div className="flex items-center justify-end gap-2">
@@ -151,6 +177,36 @@ export default function AlimentsTable({ aliments }: AlimentsTableProps) {
           ))}
         </TableBody>
       </Table>
+
+      {/* Modal pour afficher les détails de l'aliment */}
+      {selectedAliment && (
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{selectedAliment.aliment}</DialogTitle>
+            </DialogHeader>
+            <div className="grid grid-cols-2 gap-4">
+              <div>Calories:</div>
+              <div>{selectedAliment.calories.toFixed(2)}</div>
+              <div>Protéines:</div>
+              <div>{selectedAliment.proteines.toFixed(2)}g</div>
+              <div>Glucides:</div>
+              <div>{selectedAliment.glucides.toFixed(2)}g</div>
+              <div>Lipides:</div>
+              <div>{selectedAliment.lipides.toFixed(2)}g</div>
+              <div>Quantité actuelle:</div>
+              <div>{selectedAliment.quantite}</div>
+              <div>Date d'ajout:</div>
+              <div>
+                {new Date(selectedAliment.createdAt).toLocaleDateString()}
+              </div>
+            </div>
+            <Button onClick={handleDialogClose} className="mt-4">
+              Fermer
+            </Button>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 }
