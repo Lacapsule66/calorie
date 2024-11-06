@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -45,8 +46,15 @@ export default function Header({ session }: { session: Session | null }) {
                   href="/"
                   onClick={() => setIsOpen(false)}
                 >
-                  <PieChart className="size-8 mr-2" />
-                  <span className="font-bold">FitTrack</span>
+                  {/* <PieChart className="size-8 mr-2" /> */}
+                  <Image
+                    className=" rounded-full mr-2"
+                    src={"/images/logo.png"}
+                    height={32}
+                    width={32}
+                    alt={""}
+                  />
+                  <span className="font-bold">Vos-Cal</span>
                 </Link>
                 <Link
                   className="text-foreground/60 hover:text-foreground"
@@ -68,8 +76,14 @@ export default function Header({ session }: { session: Session | null }) {
             </SheetContent>
           </Sheet>
           <Link className="flex items-center space-x-2 md:mr-6" href="/">
-            <PieChart className="size-8" />
-            <span className="font-bold hidden md:inline-block">FitTrack</span>
+            <Image
+              className=" rounded-full m-2"
+              src={"/images/logo.png"}
+              height={32}
+              width={32}
+              alt={""}
+            />{" "}
+            <span className="font-bold hidden md:inline-block">Vos-Cal</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
             <Link className="text-foreground/60 hover:text-foreground" href="/">
@@ -142,7 +156,7 @@ export default function Header({ session }: { session: Session | null }) {
                 <span>Paramètres</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => signOut()}>
+              <DropdownMenuItem onClick={() => signOut({ callbackUrl: "/" })}>
                 <LogOut className="mr-2 size-8" />
                 <span>Déconnexion</span>
               </DropdownMenuItem>
