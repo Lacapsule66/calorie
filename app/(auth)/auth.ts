@@ -1,7 +1,6 @@
 import { compare } from "bcrypt-ts";
 import NextAuth, { Session, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import Google from "next-auth/providers/google";
 
 import { getUser } from "@/db/queries";
 
@@ -19,22 +18,13 @@ export const {
 } = NextAuth({
   ...authConfig,
   providers: [
-    Google,
     Credentials({
-      credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
+      credentials: {},
       async authorize({ email, password }: any) {
         let users = await getUser(email);
         if (users.length === 0) return null;
-
         let passwordsMatch = await compare(password, users[0].password!);
-        if (passwordsMatch) {
-          return users[0] as any;
-        } else {
-          return null;
-        }
+        if (passwordsMatch) return users[0] as any;
       },
     }),
   ],
