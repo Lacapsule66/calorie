@@ -28,7 +28,7 @@ export const login = async (
     await signIn("credentials", {
       email: validatedData.email,
       password: validatedData.password,
-      redirect: false,
+      redirect: true,
     });
 
     return { status: "success" };
