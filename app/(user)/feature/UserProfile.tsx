@@ -1,6 +1,15 @@
 import { Beef, Flame, Ruler, Trophy, User, Weight, Wheat } from "lucide-react";
 
-export default function UserProfile() {
+export default function UserProfile({
+  user,
+}: {
+  user: {
+    id: string;
+    email: string;
+    name: null;
+    profile: null;
+  };
+}) {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 p-4">
       <div className="max-w-md mx-auto space-y-8">
