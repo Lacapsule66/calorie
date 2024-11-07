@@ -4,6 +4,7 @@
 
 @layer base {
   :root {
+    /* Couleurs de base */
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -29,9 +30,16 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
+    /* Couleurs des macronutriments */
+    --carbohydrate: 30 100% 60%; /* Glucides */
+    --fat: 40 80% 50%; /* Lipides */
+    --protein: 220 80% 55%; /* Protéines */
+    --fiber: 120 60% 50%; /* Fibres */
   }
 
   .dark {
+    /* Couleurs de base en mode sombre */
     --background: 20 14.3% 4.1%;
     --foreground: 0 0% 95%;
     --card: 24 9.8% 10%;
@@ -56,6 +64,12 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+
+    /* Couleurs des macronutriments en mode sombre */
+    --carbohydrate: 30 80% 45%; /* Glucides */
+    --fat: 40 70% 40%; /* Lipides */
+    --protein: 220 70% 50%; /* Protéines */
+    --fiber: 120 50% 40%; /* Fibres */
   }
 }
 
@@ -65,5 +79,31 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Classes pour les couleurs des macronutriments */
+  .bg-carbohydrate {
+    background-color: hsl(var(--carbohydrate));
+  }
+  .bg-fat {
+    background-color: hsl(var(--fat));
+  }
+  .bg-protein {
+    background-color: hsl(var(--protein));
+  }
+  .bg-fiber {
+    background-color: hsl(var(--fiber));
+  }
+  .text-carbohydrate {
+    color: hsl(var(--carbohydrate));
+  }
+  .text-fat {
+    color: hsl(var(--fat));
+  }
+  .text-protein {
+    color: hsl(var(--protein));
+  }
+  .text-fiber {
+    color: hsl(var(--fiber));
   }
 }

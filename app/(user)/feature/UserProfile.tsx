@@ -1,171 +1,116 @@
-"use client";
+import { Beef, Flame, Ruler, Trophy, User, Weight, Wheat } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useState } from "react";
-
-type UserProfileProps = {
-  user: {
-    id: string;
-    email: string;
-    name: string | null;
-    profile: {
-      age: number;
-      weight: number;
-      height: number;
-      objectif: string;
-      sportFrequency: string;
-    } | null;
-  };
-};
-
-export default function UserProfile(
-  { user }: UserProfileProps = {
-    user: {
-      id: "123e4567-e89b-12d3-a456-426614174000",
-      email: "user@example.com",
-      name: "John Doe",
-      profile: {
-        age: 30,
-        weight: 70,
-        height: 175,
-        objectif: "Perdre du poids",
-        sportFrequency: "Régulièrement",
-      },
-    },
-  }
-) {
-  const [formData, setFormData] = useState({
-    name: user.name || "",
-    age: user.profile?.age || "",
-    weight: user.profile?.weight || "",
-    height: user.profile?.height || "",
-    objectif: user.profile?.objectif || "",
-    sportFrequency: user.profile?.sportFrequency || "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would typically send the updated data to your backend
-    console.log("Updated profile data:", formData);
-  };
-
+export default function UserProfile() {
   return (
-    <Card className="w-full max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold text-center">
-          Profil Utilisateur
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" value={user.email} disabled />
+    <div className="min-h-screen bg-slate-950 text-slate-50 p-4">
+      <div className="max-w-md mx-auto space-y-8">
+        {/* Objectifs Section */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-slate-300">Objectifs</h2>
+          <div className="space-y-4">
+            <div className="flex items-center gap-4">
+              <div className="size-12 rounded-full bg-emerald-900/50 flex items-center justify-center">
+                <Trophy className="size-6 text-emerald-400" />
+              </div>
+              <span className="flex-1">Objectif</span>
+              <div className="bg-slate-800 rounded-full px-4 py-2">
+                Maintenir Le Poids
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="size-12 rounded-full bg-rose-900/50 flex items-center justify-center">
+                <User className="size-6 text-rose-400" />
+              </div>
+              <span className="flex-1">Pas quotidiens</span>
+              <div className="bg-slate-800 rounded-full px-4 py-2 flex gap-2">
+                <span>10000</span>
+                <span className="text-slate-400">pas</span>
+              </div>
+            </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="name">Nom</Label>
-            <Input
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
+        </div>
+
+        {/* Nutrition Section */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-slate-300">Nutrition</h2>
+          <div className="space-y-4">
+            <div className="flex items-center gap-4">
+              <div className="size-12 rounded-full bg-purple-900/50 flex items-center justify-center">
+                <Flame className="size-6 text-purple-400" />
+              </div>
+              <span className="flex-1">Calories</span>
+              <div className="bg-slate-800 rounded-full px-4 py-2 flex gap-2">
+                <span>2800</span>
+                <span className="text-slate-400">kcal</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="size-12 rounded-full bg-rose-900/50 flex items-center justify-center">
+                <div className="size-6 rotate-45 bg-rose-400 rounded-sm" />
+              </div>
+              <span className="flex-1">Graisses</span>
+              <div className="bg-slate-800 rounded-full px-4 py-2 flex gap-2">
+                <span>93</span>
+                <span className="text-slate-400">g</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="size-12 rounded-full bg-yellow-900/50 flex items-center justify-center">
+                <Wheat className="size-6 text-yellow-400" />
+              </div>
+              <span className="flex-1">Glucides</span>
+              <div className="bg-slate-800 rounded-full px-4 py-2 flex gap-2">
+                <span>350</span>
+                <span className="text-slate-400">g</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="size-12 rounded-full bg-emerald-900/50 flex items-center justify-center">
+                <Beef className="size-6 text-emerald-400" />
+              </div>
+              <span className="flex-1">Protéines</span>
+              <div className="bg-slate-800 rounded-full px-4 py-2 flex gap-2">
+                <span>140</span>
+                <span className="text-slate-400">g</span>
+              </div>
+            </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="age">Âge</Label>
-            <Input
-              id="age"
-              name="age"
-              type="number"
-              value={formData.age}
-              onChange={handleChange}
-            />
+        </div>
+
+        {/* Profil Section */}
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold text-slate-300">Profil</h2>
+          <div className="space-y-4">
+            <div className="flex items-center gap-4">
+              <div className="size-12 rounded-full bg-slate-800 flex items-center justify-center">
+                <User className="size-6 text-slate-400" />
+              </div>
+              <span className="flex-1">Genre</span>
+              <div className="bg-slate-800 rounded-full px-4 py-2">Homme</div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="size-12 rounded-full bg-slate-800 flex items-center justify-center">
+                <Ruler className="size-6 text-slate-400" />
+              </div>
+              <span className="flex-1">Taille</span>
+              <div className="bg-slate-800 rounded-full px-4 py-2 flex gap-2">
+                <span>172</span>
+                <span className="text-slate-400">cm</span>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="size-12 rounded-full bg-slate-800 flex items-center justify-center">
+                <Weight className="size-6 text-slate-400" />
+              </div>
+              <span className="flex-1">Poids</span>
+              <div className="bg-slate-800 rounded-full px-4 py-2 flex gap-2">
+                <span>75</span>
+                <span className="text-slate-400">kg</span>
+              </div>
+            </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="weight">Poids (kg)</Label>
-            <Input
-              id="weight"
-              name="weight"
-              type="number"
-              step="0.1"
-              value={formData.weight}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="height">Taille (cm)</Label>
-            <Input
-              id="height"
-              name="height"
-              type="number"
-              value={formData.height}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="objectif">Objectif</Label>
-            <Select
-              name="objectif"
-              value={formData.objectif}
-              onValueChange={(value) =>
-                setFormData({ ...formData, objectif: value })
-              }
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Sélectionnez un objectif" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Perdre du poids">Perdre du poids</SelectItem>
-                <SelectItem value="Prendre du muscle">
-                  Prendre du muscle
-                </SelectItem>
-                <SelectItem value="Maintenir son poids">
-                  Maintenir son poids
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="sportFrequency">Fréquence sportive</Label>
-            <Select
-              name="sportFrequency"
-              value={formData.sportFrequency}
-              onValueChange={(value) =>
-                setFormData({ ...formData, sportFrequency: value })
-              }
-            >
-              <SelectTrigger>
-                <SelectValue placeholder="Sélectionnez une fréquence" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Rarement">Rarement</SelectItem>
-                <SelectItem value="Occasionnellement">
-                  Occasionnellement
-                </SelectItem>
-                <SelectItem value="Régulièrement">Régulièrement</SelectItem>
-                <SelectItem value="Quotidiennement">Quotidiennement</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <Button type="submit" className="w-full">
-            Mettre à jour le profil
-          </Button>
-        </form>
-      </CardContent>
-    </Card>
+        </div>
+      </div>
+    </div>
   );
 }

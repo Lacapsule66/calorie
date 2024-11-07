@@ -37,8 +37,8 @@ export function Chat({
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
 
   return (
-    <div className="flex flex-row justify-center pb-4 h  sm:mt-24 md:pb-8 max-h-screen bg-background">
-      <div className="flex flex-col h-[calc(100vh-7rem)]  justify-between items-center gap-4">
+    <div className="flex flex-row justify-center pb-4  md:pb-8 max-h-screen bg-background">
+      <div className="flex flex-col h-[calc(100vh-9rem)]  justify-between items-center gap-4">
         <div
           ref={messagesContainerRef}
           className="flex flex-col gap-4 h-full pt-4 w-[98dvw] items-center overflow-y-scroll"

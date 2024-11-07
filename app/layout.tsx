@@ -27,7 +27,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className="mt-16">{children}</div>
           <Header session={session} />
         </ThemeProvider>
       </body>

@@ -40,7 +40,7 @@ export default async function page() {
     // Ajoutez autant de données que nécessaire
   ];
   return (
-    <div className=" sm:mt-24 sm:flex flex-col gap-4 mt-4 items-center">
+    <div className="flex flex-col gap-4 mt-4 items-center ">
       <CalorieChart userAliments={userAliments} />
       <CompteurMacro userAliments={userAliments} />
       <AlimentsTable aliments={userAliments} />
