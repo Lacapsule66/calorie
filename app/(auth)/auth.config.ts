@@ -6,34 +6,20 @@ export const authConfig = {
     newUser: "/",
   },
   providers: [
-    // added later in auth.ts since it requires bcrypt which is only compatible with Node.js
-    // while this file is also used in non-Node.js environments
+    // Added in auth.ts where Node.js is used
   ],
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      let isLoggedIn = !!auth?.user;
-      let isOnChat = nextUrl.pathname.startsWith("/");
-      let isOnRegister = nextUrl.pathname.startsWith("/register");
-      let isOnLogin = nextUrl.pathname.startsWith("/login");
-
-      if (isLoggedIn && (isOnLogin || isOnRegister)) {
-        return Response.redirect(new URL("/", nextUrl));
-      }
-
-      if (isOnRegister || isOnLogin) {
-        return true; // Always allow access to register and login pages
-      }
-
-      if (isOnChat) {
-        if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
-      }
-
-      if (isLoggedIn) {
-        return Response.redirect(new URL("/", nextUrl));
-      }
-
-      return true;
+      // Retourne vrai si l'utilisateur est authentifié pour les pages autorisées
+      return (
+        !!auth?.user ||
+        nextUrl.pathname.startsWith("/login") ||
+        nextUrl.pathname.startsWith("/register")
+      );
+    },
+    async redirect({ url }) {
+      // Redirige vers la racine après la connexion
+      return url.startsWith("/") ? url : "/";
     },
   },
 } satisfies NextAuthConfig;

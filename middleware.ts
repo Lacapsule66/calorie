@@ -5,7 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
   // Token from Auth.js (NextAuth)
-  const token = await getToken({ req });
+  const token = await getToken({
+    req,
+    secret: "JT+B2CM7T62wmU+eHExjDBBzw25lENSBYIZFAmjiJ2s=",
+  });
 
   // Définir les chemins que vous souhaitez exclure de la protection
   const excludedPaths = ["/login", "/signup", "/public-page"];
