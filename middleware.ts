@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
   });
 
   // Définir les chemins que vous souhaitez exclure de la protection
-  const excludedPaths = ["/login", "/signup", "/public-page"];
+  const excludedPaths = ["/login", "/signup", "/public-page", "/register"];
 
   // Vérifie si le chemin fait partie des exceptions
   if (excludedPaths.some((path) => req.nextUrl.pathname.startsWith(path))) {
