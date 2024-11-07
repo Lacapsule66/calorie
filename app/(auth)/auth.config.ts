@@ -17,10 +17,9 @@ export const authConfig = {
         nextUrl.pathname.startsWith("/register")
       );
     },
-    async redirect({ url, baseUrl }) {
-      // Redirige vers l'accueil après la connexion
-      if (url.startsWith(baseUrl)) return url;
-      return baseUrl;
+    async redirect({ url }) {
+      // Redirige vers la racine après la connexion
+      return url.startsWith("/") ? url : "/";
     },
   },
 } satisfies NextAuthConfig;
