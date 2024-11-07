@@ -17,6 +17,9 @@ export default function Page() {
       status: "idle",
     }
   );
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   useEffect(() => {
     if (state.status === "failed") {
