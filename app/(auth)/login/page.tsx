@@ -17,9 +17,6 @@ export default function Page() {
       status: "idle",
     }
   );
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
 
   useEffect(() => {
     if (state.status === "failed") {
@@ -27,7 +24,7 @@ export default function Page() {
     } else if (state.status === "invalid_data") {
       toast.error("Échec de la validation de votre soumission !");
     } else if (state.status === "success") {
-      router.push("/");
+      router.refresh();
     }
   }, [state.status, router]);
 
