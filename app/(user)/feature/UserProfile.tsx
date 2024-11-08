@@ -11,7 +11,7 @@ export default function UserProfile({
   };
 }) {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-50 p-4">
+    <div className="min-h-screen  bg-background text-slate-50 p-4">
       <div className="max-w-md mx-auto space-y-8">
         {/* Objectifs Section */}
         <div className="space-y-4">
