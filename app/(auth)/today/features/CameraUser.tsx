@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -9,22 +9,27 @@ const UserCamera: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [isStreaming, setIsStreaming] = useState(false);
+  const [stream, setStream] = useState<MediaStream | null>(null);
   const [photo, setPhoto] = useState<string | null>(null);
 
   const startCameraStream = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
+      const mediaStream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: "environment" },
       });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
-      }
+      setStream(mediaStream);
       setIsStreaming(true);
     } catch (error) {
       console.error("Erreur lors de l’accès à la caméra :", error);
     }
   };
+
+  useEffect(() => {
+    if (videoRef.current && stream) {
+      videoRef.current.srcObject = stream;
+      videoRef.current.play();
+    }
+  }, [stream]);
 
   const takePhoto = () => {
     if (videoRef.current && canvasRef.current) {
@@ -61,16 +66,13 @@ const UserCamera: React.FC = () => {
         </div>
       </CardHeader>
       <CardContent>
-        {isStreaming ? (
-          <video
-            ref={videoRef}
-            className="w-full h-auto rounded-lg"
-            autoPlay
-            playsInline
-          />
-        ) : (
-          <p>Appuyez sur le bouton pour démarrer la caméra.</p>
-        )}
+        <video
+          ref={videoRef}
+          className={`w-full h-auto rounded-lg ${!isStreaming ? "hidden" : ""}`}
+          autoPlay
+          playsInline
+        />
+        {!isStreaming && <p>Appuyez sur le bouton pour démarrer la caméra.</p>}
         {photo && (
           <div className="mt-4">
             <img
