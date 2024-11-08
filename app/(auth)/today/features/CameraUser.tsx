@@ -86,24 +86,28 @@ const UserCamera: React.FC = () => {
         </div>
       </CardHeader>
       <CardContent className="relative">
-        {isStreaming && (
-          <video
-            ref={videoRef}
-            className="w-full h-auto rounded-lg"
-            autoPlay
-            playsInline
-          />
-        )}
-        {photo && (
-          <img
-            src={photo}
-            alt="Photo prise"
-            className="w-full h-auto rounded-lg absolute top-0 left-0"
-          />
-        )}
-        {!isStreaming && !photo && (
-          <p>Appuyez sur le bouton pour démarrer la caméra.</p>
-        )}
+        <div className="w-full h-64 relative">
+          {isStreaming && (
+            <video
+              ref={videoRef}
+              className="size-full object-cover rounded-lg"
+              autoPlay
+              playsInline
+            />
+          )}
+          {photo && (
+            <img
+              src={photo}
+              alt="Photo prise"
+              className="size-full object-cover rounded-lg absolute top-0 left-0"
+            />
+          )}
+          {!isStreaming && !photo && (
+            <div className="size-full flex items-center justify-center">
+              <p>Appuyez sur le bouton pour démarrer la caméra.</p>
+            </div>
+          )}
+        </div>
         <canvas ref={canvasRef} style={{ display: "none" }} />
       </CardContent>
     </Card>
